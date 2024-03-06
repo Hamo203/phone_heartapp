@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         this.stop_btn=findViewById(R.id.stop_btn);
         this.lineChart=findViewById(R.id.chart);
         lineChart.getAxisRight().setDrawLabels(false);
-
         Intent intent=getIntent();
         String stringVal=intent.getStringExtra("KEY_STRING");
         Log.d("test",stringVal);
