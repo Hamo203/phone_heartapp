@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,7 +34,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     private Button start_btn;
     private Button stop_btn;
-    private String sensorname="heatbeat";
+    private String sensorname="heartbeat";
     private String info="2024.02.07";
     int id=1;
 
@@ -50,6 +51,18 @@ public class MainActivity extends AppCompatActivity {
         this.stop_btn=findViewById(R.id.stop_btn);
         this.lineChart=findViewById(R.id.chart);
         lineChart.getAxisRight().setDrawLabels(false);
+
+        Intent intent=getIntent();
+        String stringVal=intent.getStringExtra("KEY_STRING");
+        Log.d("test",stringVal);
+
+        //ボタンの設定
+        stop_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();//ログアウトみたいな状態 初期画面表示
+            }
+        });
 
         //x軸の設定
         XAxis xAxis = lineChart.getXAxis();
