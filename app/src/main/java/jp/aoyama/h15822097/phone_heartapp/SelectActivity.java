@@ -29,6 +29,7 @@ public class SelectActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
 
 
+
         //ボタンの設定
         nextButton=findViewById(R.id.nextToBtn);
         nextButton.setOnClickListener(new View.OnClickListener() {

@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         String stringVal=intent.getStringExtra("KEY_STRING");
         Log.d("test",stringVal);
 
+
         //ボタンの設定
         stop_btn.setOnClickListener(new View.OnClickListener() {
             @Override
