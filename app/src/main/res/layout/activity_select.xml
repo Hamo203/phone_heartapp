@@ -9,20 +9,64 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="784dp"
+        android:gravity="center"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/nameText"
+            android:layout_width="320dp"
+            android:layout_height="31dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Userの名前を入力してください" />
+
+        <EditText
+            android:id="@+id/editName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/dayText"
+            android:layout_width="352dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="日付を入力してください" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editDay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/sensorText"
+            android:layout_width="352dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="センサーを選択してください" />
+
+        <Spinner
+            android:id="@+id/spin_sensor"
+            android:layout_width="108dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center" />
 
         <Button
             android:id="@+id/nextToBtn"
             android:layout_width="275dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:text="@string/nextpage" />
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="223dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
     </LinearLayout>
 </RelativeLayout>
