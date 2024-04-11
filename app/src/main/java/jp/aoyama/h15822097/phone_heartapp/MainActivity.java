@@ -23,14 +23,20 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -85,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         //x軸について
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setLabelCount(4);
+        xAxis.setLabelCount(4);//グリッドの縦線の数
         xAxis.setGranularity(1f);
         //y軸について
         YAxis yAxis =lineChart.getAxisLeft();
@@ -93,13 +99,16 @@ public class MainActivity extends AppCompatActivity {
         yAxis.setAxisMaximum(100f);
         yAxis.setAxisLineWidth(2f);
         yAxis.setAxisLineColor(Color.BLACK);
-        yAxis.setLabelCount(10);
+        yAxis.setLabelCount(10);//グリッドの横線の数
 
         Log.d("test","on create");
     }
     public void startonClick(View view){
+
+
         Log.d("test","Sensorname=="+sensorname);
         FirebaseFirestore firebase = FirebaseFirestore.getInstance();
+
         firebase.collection(userName).document(info).collection(sensorname).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -128,12 +137,18 @@ public class MainActivity extends AppCompatActivity {
                                     if (data != null && data.containsKey("beat")) {
                                         Object beatObject = data.get("beat");
 
+                                        // タイムスタンプを取得してx軸の値として使用する
+                                        Timestamp timestamp = document.getTimestamp("timestamp");
+                                        long epochTime = timestamp.getSeconds(); // エポック秒を取得する
+
+                                        Log.d("test","epochtime->"+epochTime);
                                         if (beatObject instanceof Number) {
                                             double y = ((Number) beatObject).doubleValue();
                                             float yFloat = (float) y;
 
                                             int x = col;
                                             entries.add(new Entry(x, yFloat));
+                                            //entries.add(new Entry(epochTime, yFloat));
                                         } else {
 
                                             Log.d(TAG, "Invalid 'beat' data type");

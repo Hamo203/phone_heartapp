@@ -46,6 +46,7 @@ public class SelectActivity extends AppCompatActivity {
                 String day=editDay.getText().toString();
 
                 String selected=(String) spin_sensor.getSelectedItem();
+                //MainActivityで変数を利用できるようにする
                 Intent intent =new Intent(getApplication(),MainActivity.class);
 
                 //入力された名前
