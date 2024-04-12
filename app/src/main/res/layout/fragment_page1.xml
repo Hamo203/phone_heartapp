@@ -6,9 +6,9 @@
     tools:context=".Page1">
 
 
-    <Button
-        android:id="@+id/button"
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Button" />
+        android:layout_height="match_parent" />
+
 </FrameLayout>
