@@ -4,16 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class MainTabActivity extends AppCompatActivity {
+    Button funcBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tab);
+
+        funcBtn=findViewById(R.id.funcBtn);
 
         // ViewPagerをアダプタに関連付ける
         ViewPager2 pager = (ViewPager2)findViewById(R.id.pager);
@@ -24,6 +29,8 @@ public class MainTabActivity extends AppCompatActivity {
         new TabLayoutMediator(tabs, pager,
                 (tab, position) -> tab.setText("PAGE " + (position + 1))
         ).attach();
+    }
+    public void funcOnClick(View view){
 
     }
 }

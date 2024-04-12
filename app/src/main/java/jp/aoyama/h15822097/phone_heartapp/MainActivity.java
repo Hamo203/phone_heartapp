@@ -104,8 +104,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d("test","on create");
     }
     public void startonClick(View view){
-
-
         Log.d("test","Sensorname=="+sensorname);
         FirebaseFirestore firebase = FirebaseFirestore.getInstance();
 
