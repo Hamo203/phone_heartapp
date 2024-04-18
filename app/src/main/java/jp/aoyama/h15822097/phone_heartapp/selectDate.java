@@ -21,4 +21,8 @@ public class selectDate extends AppCompatActivity {
     public void newonClick(View v){
         Log.d("test","newdata");
     }
+    public void backonClick(View v){
+        //初期画面に戻る
+        finish();
+    }
 }

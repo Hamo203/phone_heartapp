@@ -43,7 +43,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editName"
-        android:layout_marginTop="44dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="40dp"
+        android:foregroundGravity="right"
         android:onClick="nextonClick"
         android:text="next" />
 </RelativeLayout>
