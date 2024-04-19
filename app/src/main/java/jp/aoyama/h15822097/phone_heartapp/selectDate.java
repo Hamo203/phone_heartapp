@@ -30,15 +30,19 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
         setContentView(R.layout.activity_select_date);
         radioGroup=(RadioGroup) findViewById(R.id.radioGroup);
 
+        //日付表示用TextView
         datetext=findViewById(R.id.dateText);
 
+        //カレンダー　初期設定
         c=Calendar.getInstance();
         datetext.setText(String.format("%d年%d月%d日", c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)));
     }
 
 
-    public void nextonClick(View v){
+    public void nextonClick(View v){//次へボタンが押されたとき
+        //radio button のid取得
         checkedId = radioGroup.getCheckedRadioButtonId();
+
         if (checkedId==R.id.historicBtn) {
             //radio buttonが選択されている場合
             Toast.makeText(getApplicationContext(),
@@ -61,7 +65,7 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
     }
 
     public void textonClick(View v){
-        //DatePickerFragmentを表示
+        //日付Text押されたらDatePickerFragmentを表示
         DatePick datePicker = new DatePick();
         datePicker.show(getSupportFragmentManager(), "datePicker");
     }
@@ -73,6 +77,7 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
 
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        //選ばれた日付を表示
         datetext.setText(String.format("%d年%d月%d日", year, monthOfYear + 1, dayOfMonth));
     }
 }
