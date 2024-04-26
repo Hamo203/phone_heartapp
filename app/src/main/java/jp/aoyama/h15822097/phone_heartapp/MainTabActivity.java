@@ -34,6 +34,7 @@ public class MainTabActivity extends AppCompatActivity {
         ).attach();
     }
     public void funcOnClick(View view){
+        //センサー止める時に使う
 
     }
     public void backonClick(View view){

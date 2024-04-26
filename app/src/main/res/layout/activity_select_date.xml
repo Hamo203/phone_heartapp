@@ -45,7 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/dateText"
@@ -54,6 +55,10 @@
                 android:onClick="textonClick"
                 android:text=""
                 android:textSize="20sp" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
         </LinearLayout>
 
         <RadioButton
@@ -71,12 +76,12 @@
 
 
         <Button
-        android:id="@+id/backBtn"
+        android:id="@+id/logoutBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:onClick="backonClick"
-        android:text="戻る"
+        android:onClick="logoutClick"
+        android:text="ログアウト"
         app:layout_constraintStart_toStartOf="@id/radioGroup"
         app:layout_constraintTop_toBottomOf="@id/radioGroup" />
 

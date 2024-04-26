@@ -8,12 +8,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -23,6 +31,11 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
     int checkedId=-1;
     Calendar c;
     TextView datetext;
+    ArrayAdapter<String> adapter;
+    Spinner spinner;
+    FirebaseAuth firebaseAuth;
+    Button logoutBtn;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +48,21 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
 
         //カレンダー　初期設定
         c=Calendar.getInstance();
-        datetext.setText(String.format("%d年%d月%d日", c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)));
+        datetext.setText(String.format("%d年%d月%d日", c.get(Calendar.YEAR), c.get(Calendar.MONTH)+1, c.get(Calendar.DAY_OF_MONTH)));
+
+        firebaseAuth=FirebaseAuth.getInstance();
+        logoutBtn=findViewById(R.id.logoutBtn);
+        user= firebaseAuth.getCurrentUser();
+        if(user==null){
+            //ユーザがいなかった場合、ログインしなおし
+            Intent intent=new Intent(getApplicationContext(),loginName.class);
+            startActivity(intent);
+            finish();
+        }
+
+        ArrayAdapter<String> adapter= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+        //firebaseからデータをとり,spinnerに格納
+        onSetfirebase(c.get(Calendar.YEAR), c.get(Calendar.MONTH)+1, c.get(Calendar.DAY_OF_MONTH));
     }
 
 
@@ -70,8 +97,11 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
         datePicker.show(getSupportFragmentManager(), "datePicker");
     }
 
-    public void backonClick(View v){
-        //初期画面に戻る
+    public void logoutClick(View v){
+        //ログアウトして初期画面に戻る
+        FirebaseAuth.getInstance().signOut();
+        Intent intent=new Intent(getApplicationContext(),loginName.class);
+        startActivity(intent);
         finish();
     }
 
@@ -79,5 +109,14 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         //選ばれた日付を表示
         datetext.setText(String.format("%d年%d月%d日", year, monthOfYear + 1, dayOfMonth));
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
     }
+
+    public void onSetfirebase(int year, int monthOfYear, int dayOfMonth){
+        FirebaseFirestore firebase = FirebaseFirestore.getInstance();
+        //firebaseから指定された日程のコレクションを見つけ、adapterに追加する
+    }
+
 }
