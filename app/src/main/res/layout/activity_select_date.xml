@@ -41,25 +41,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/dateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="textonClick"
+            android:text=""
+            android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/dateText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="textonClick"
-                android:text=""
-                android:textSize="20sp" />
-
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-        </LinearLayout>
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
 
         <RadioButton
             android:id="@+id/newBtn"
@@ -67,15 +59,46 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="新規データ登録"
+            android:layout_margin="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/historicBtn" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="年齢"
+                android:layout_marginLeft="30dp"/>
+
+            <EditText
+                android:id="@+id/hrest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="安静時心拍数"
+                />
+
+            <EditText
+                android:id="@+id/weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:layout_weight="1"
+                android:hint="体重" />
+        </LinearLayout>
 
 
     </RadioGroup>
 
 
-        <Button
+    <Button
         android:id="@+id/logoutBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

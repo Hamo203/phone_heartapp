@@ -38,6 +38,11 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth= FirebaseAuth.getInstance();
 
     }
+    public void birthonClick(View v){
+        //日付Text押されたらDatePickerFragmentを表示
+        DatePick datePicker = new DatePick();
+        datePicker.show(getSupportFragmentManager(), "datePicker");
+    }
     public void regonClick(View v){
         //進度見れるバー
         progressBar.setVisibility(View.VISIBLE);

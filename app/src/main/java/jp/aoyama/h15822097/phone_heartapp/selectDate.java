@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -21,8 +22,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class selectDate extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
@@ -36,6 +39,9 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
     FirebaseAuth firebaseAuth;
     Button logoutBtn;
     FirebaseUser user;
+    EditText hrest;
+    EditText age;
+    EditText weight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,10 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
         //カレンダー　初期設定
         c=Calendar.getInstance();
         datetext.setText(String.format("%d年%d月%d日", c.get(Calendar.YEAR), c.get(Calendar.MONTH)+1, c.get(Calendar.DAY_OF_MONTH)));
+
+        age=findViewById(R.id.age);
+        hrest=findViewById(R.id.hrest);
+        weight=findViewById(R.id.weight);
 
         firebaseAuth=FirebaseAuth.getInstance();
         logoutBtn=findViewById(R.id.logoutBtn);
@@ -71,17 +81,48 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
         checkedId = radioGroup.getCheckedRadioButtonId();
 
         if (checkedId==R.id.historicBtn) {
-            //radio buttonが選択されている場合
+            //過去のデータ取得が選択されている場合
             Toast.makeText(getApplicationContext(),
                     ((RadioButton)findViewById(checkedId)).getText()
                             + "が選択されています:"+checkedId,
                     Toast.LENGTH_SHORT).show();
         }else if (checkedId==R.id.newBtn) {
-            //radio buttonが選択されている場合
-            Toast.makeText(getApplicationContext(),
-                    ((RadioButton)findViewById(checkedId)).getText()
-                            + "が選択されています:"+checkedId,
-                    Toast.LENGTH_SHORT).show();
+            //新規データ取得が選択されている場合
+
+            String sage=age.getText().toString();
+            String shrest=hrest.getText().toString();
+            String sweight=weight.getText().toString();
+            if(shrest.length()==0||sage.length()==0||weight.length()==0){
+                Toast.makeText(getApplicationContext(), "未入力の欄があります",
+                        Toast.LENGTH_SHORT).show();
+            }else if(!sage.matches("\\d+")){
+                Toast.makeText(getApplicationContext(), "年齢の値が不適切です",
+                        Toast.LENGTH_SHORT).show();
+            }else if(!shrest.matches("\\d+")){
+                Toast.makeText(getApplicationContext(), "安静時心拍数を整数で入力してください",
+                        Toast.LENGTH_SHORT).show();
+            }else if(!sweight.matches("\\d+(\\.\\d+)?")){
+                Toast.makeText(getApplicationContext(), "体重の値が不適切です",
+                        Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Integer iage=Integer.parseInt(sage);
+                Integer ihrest=Integer.parseInt(shrest);
+                Float fweight=Float.parseFloat(sweight);
+
+
+                Log.d("test","iage="+iage);
+                Log.d("test","ihrest="+ihrest);
+                Log.d("test","fweight="+fweight);
+                Log.d("test","fweight="+fweight);
+
+                Intent intent=new Intent(getApplicationContext(),MainTabActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
+
+
         }else {
             Toast.makeText(getApplicationContext(),
                     "何も選択されていません",
