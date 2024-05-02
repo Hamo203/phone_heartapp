@@ -10,14 +10,14 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="149dp"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content"
+        android:layout_weight="2" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="623dp"
-        android:layout_weight="7">
+        android:layout_height="wrap_content"
+        android:layout_weight="15">
 
     </androidx.viewpager2.widget.ViewPager2>
 
@@ -25,8 +25,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/backBtn"

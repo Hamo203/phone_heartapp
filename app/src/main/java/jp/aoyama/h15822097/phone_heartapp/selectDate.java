@@ -1,5 +1,6 @@
 package jp.aoyama.h15822097.phone_heartapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -18,6 +19,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,7 +29,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class selectDate extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
@@ -42,6 +47,9 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
     EditText hrest;
     EditText age;
     EditText weight;
+
+    Date date;
+    SimpleDateFormat sdf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +68,16 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
         hrest=findViewById(R.id.hrest);
         weight=findViewById(R.id.weight);
 
+        // Dateオブジェクトを用いて現在時刻を取得してくる値を 変数 date に格納
+        date= new Date();
+        // SimpleDateFormat をオブジェクト化し、任意のフォーマットを設定
+        sdf= new SimpleDateFormat("yyyy-MM-dd");
+
+
+
         firebaseAuth=FirebaseAuth.getInstance();
         logoutBtn=findViewById(R.id.logoutBtn);
+        //ユーザ取得
         user= firebaseAuth.getCurrentUser();
         if(user==null){
             //ユーザがいなかった場合、ログインしなおし
@@ -110,11 +126,27 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
                 Integer ihrest=Integer.parseInt(shrest);
                 Float fweight=Float.parseFloat(sweight);
 
+                Map<String, Object> pdata = new HashMap<>();
+                pdata.put("age", iage);
+                pdata.put("hrest", ihrest);
+                pdata.put("weight", fweight);
 
-                Log.d("test","iage="+iage);
-                Log.d("test","ihrest="+ihrest);
-                Log.d("test","fweight="+fweight);
-                Log.d("test","fweight="+fweight);
+                //各ユーザのコレクションを作成し、基本データ送信
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection(user.getUid()).document(sdf.format(date)).set(pdata)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("test", "データ送信よし");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("test", "データ送信×", e);
+                            }
+                        });
+
 
                 Intent intent=new Intent(getApplicationContext(),MainTabActivity.class);
                 startActivity(intent);

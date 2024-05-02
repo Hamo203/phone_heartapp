@@ -38,7 +38,6 @@ public class MainTabActivity extends AppCompatActivity {
         ).attach();
     }
     public void funcOnClick(View view){
-        //センサー止める時に使う
         // Dateオブジェクトを用いて現在時刻を取得してくる値を 変数 date に格納
         Date date = new Date();
         // SimpleDateFormat をオブジェクト化し、任意のフォーマットを設定

@@ -18,6 +18,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class RegisterActivity extends AppCompatActivity {
     TextInputEditText editMail;
@@ -26,6 +30,9 @@ public class RegisterActivity extends AppCompatActivity {
     Button registerBtn;
     ProgressBar progressBar;
     TextView logNow;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,14 +45,11 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth= FirebaseAuth.getInstance();
 
     }
-    public void birthonClick(View v){
-        //日付Text押されたらDatePickerFragmentを表示
-        DatePick datePicker = new DatePick();
-        datePicker.show(getSupportFragmentManager(), "datePicker");
-    }
+
     public void regonClick(View v){
         //進度見れるバー
         progressBar.setVisibility(View.VISIBLE);
+
 
         String email,password;
         email=String.valueOf(editMail.getText());
@@ -61,6 +65,10 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Pass が空欄です",Toast.LENGTH_SHORT).show();
             return;
         }
+
+
+
+        //firebase　アカウント作成
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -69,7 +77,6 @@ public class RegisterActivity extends AppCompatActivity {
                         progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "Authentication success!.", Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = mAuth.getCurrentUser();
 
                         } else {
                             // If sign in fails, display a message to the user.
