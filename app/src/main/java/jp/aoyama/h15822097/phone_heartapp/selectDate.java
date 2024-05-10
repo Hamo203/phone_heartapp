@@ -107,6 +107,7 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
                     Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(getApplicationContext(),MainTabActivity.class);
             intent.putExtra("Date",sdf.format(date)); //日付を次ページへ
+            intent.putExtra("graphname","nodata");
             startActivity(intent);
             finish();
 
@@ -159,26 +160,9 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
                         });
 
 
-                Map<String, Object> cdata = new HashMap<>();
-                cdata.put("graphname",sgraphname);
-                db.collection(user.getUid()).document(sdf.format(date)).collection("id").add(cdata).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d("test", "DocumentSnapshot written with ID: " + documentReference.getId());
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w("test", "Error adding document", e);
-                            }
-                        });
-
-
-
-
                 Intent intent=new Intent(getApplicationContext(),MainTabActivity.class);
                 intent.putExtra("Date",sdf.format(date)); //日付を次ページへ
+                intent.putExtra("graphname",sgraphname);
                 startActivity(intent);
                 finish();
 
