@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -47,6 +48,7 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
     EditText hrest;
     EditText age;
     EditText weight;
+    EditText graphname;
 
     Date date;
     SimpleDateFormat sdf;
@@ -67,6 +69,7 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
         age=findViewById(R.id.age);
         hrest=findViewById(R.id.hrest);
         weight=findViewById(R.id.weight);
+        graphname=findViewById(R.id.graphname);
 
         // Dateオブジェクトを用いて現在時刻を取得してくる値を 変数 date に格納
         date= new Date();
@@ -102,13 +105,21 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
                     ((RadioButton)findViewById(checkedId)).getText()
                             + "が選択されています:"+checkedId,
                     Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(getApplicationContext(),MainTabActivity.class);
+            intent.putExtra("Date",sdf.format(date)); //日付を次ページへ
+            startActivity(intent);
+            finish();
+
+
         }else if (checkedId==R.id.newBtn) {
             //新規データ取得が選択されている場合
 
             String sage=age.getText().toString();
             String shrest=hrest.getText().toString();
             String sweight=weight.getText().toString();
-            if(shrest.length()==0||sage.length()==0||weight.length()==0){
+            String sgraphname=graphname.getText().toString();
+
+            if(shrest.length()==0||sage.length()==0||sweight.length()==0||sgraphname.length()==0){
                 Toast.makeText(getApplicationContext(), "未入力の欄があります",
                         Toast.LENGTH_SHORT).show();
             }else if(!sage.matches("\\d+")){
@@ -148,7 +159,26 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
                         });
 
 
+                Map<String, Object> cdata = new HashMap<>();
+                cdata.put("graphname",sgraphname);
+                db.collection(user.getUid()).document(sdf.format(date)).collection("id").add(cdata).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d("test", "DocumentSnapshot written with ID: " + documentReference.getId());
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("test", "Error adding document", e);
+                            }
+                        });
+
+
+
+
                 Intent intent=new Intent(getApplicationContext(),MainTabActivity.class);
+                intent.putExtra("Date",sdf.format(date)); //日付を次ページへ
                 startActivity(intent);
                 finish();
 
