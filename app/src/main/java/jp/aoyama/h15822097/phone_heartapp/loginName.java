@@ -55,6 +55,8 @@ public class loginName extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
         regNow=findViewById(R.id.regNow);
         progressBar=findViewById(R.id.progressbar);
+        Log.d("test","mAuth:"+mAuth);
+        //mAuth:com.google.firebase.auth.internal.zzad@7c42322
     }
     public void nextonClick(View v){
         //進度見れるバー
