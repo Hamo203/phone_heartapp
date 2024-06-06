@@ -76,6 +76,7 @@ public class selectDate extends AppCompatActivity implements DatePickerDialog.On
         // SimpleDateFormat をオブジェクト化し、任意のフォーマットを設定
         sdf= new SimpleDateFormat("yyyy-MM-dd");
 
+        Log.d("test","test");
 
 
         firebaseAuth=FirebaseAuth.getInstance();
