@@ -43,16 +43,15 @@ public class MainTabActivity extends AppCompatActivity {
         funcBtn=findViewById(R.id.funcBtn);
         backBtn=findViewById(R.id.backBtn);
 
-        // Dateオブジェクトを用いて現在時刻を取得してくる値を 変数 date に格納
-        date= new Date();
         // SimpleDateFormat をオブジェクト化し、任意のフォーマットを設定
         sdf= new SimpleDateFormat("yyyy-MM-dd");
 
         Intent intent = getIntent();
+        //ユーザに入力されたグラフタイトル
         String graphname=intent.getStringExtra("graphname");
-        Log.d("test",graphname);
-
-
+        String date=intent.getStringExtra("Date");
+        Log.d("test","MainTabActivity"+date);
+        Log.d("graphname",graphname+"mainTab");
 
         //グラフタイトルをfirebaseから読み込みスピナーに入れる
         ArrayAdapter<String> titleadapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
@@ -66,9 +65,10 @@ public class MainTabActivity extends AppCompatActivity {
         user= firebaseAuth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        //過去のグラフタイトルをスピナーで選べるようにした
+        //過去の結果が見たい場合、グラフタイトルを変えられる
+        assert date != null;
         db.collection(user.getUid())
-                .document(sdf.format(date))
+                .document(date)
                 .collection("heart")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -76,7 +76,6 @@ public class MainTabActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                //Log.d("test", document.getId() + " => " + document.getData());
                                 titleadapter.add((String) document.getId());
                             }
                         } else {
@@ -84,12 +83,14 @@ public class MainTabActivity extends AppCompatActivity {
                         }
                     }
                 });
+
         Spinner spinner = (Spinner) findViewById(R.id.titlespin);
         spinner.setAdapter(titleadapter);
 
         // ViewPagerをアダプタに関連付ける
         ViewPager2 pager = (ViewPager2)findViewById(R.id.pager);
-        TapPagerAdapter adapter = new TapPagerAdapter(this);
+        //pageくっつける
+        TapPagerAdapter adapter = new TapPagerAdapter(this,graphname,date);
         pager.setAdapter(adapter);
 
         TabLayout tabs =(TabLayout) findViewById(R.id.tab_layout);
@@ -97,19 +98,10 @@ public class MainTabActivity extends AppCompatActivity {
                 (tab, position) -> tab.setText("PAGE " + (position + 1))
         ).attach();
     }
-    public void funcOnClick(View view){
-        // Dateオブジェクトを用いて現在時刻を取得してくる値を 変数 date に格納
-        Date date = new Date();
-        // SimpleDateFormat をオブジェクト化し、任意のフォーマットを設定
-        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd_hh-mm-ss");
-        sdf.format(date);
-        Log.d("test","date="+sdf.format(date));
 
-    }
     public void backonClick(View view){
         //一つ前の画面に戻る
         Intent intent=new Intent(getApplication(),selectDate.class);
         startActivity(intent);
-
     }
 }
