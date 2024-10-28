@@ -1,6 +1,6 @@
 package jp.aoyama.h15822097.phone_heartapp;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -21,6 +21,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class loginName extends AppCompatActivity {
     TextInputEditText editMail;
@@ -48,7 +50,6 @@ public class loginName extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_name);
-
         editMail=findViewById(R.id.email);
         editPass=findViewById(R.id.editPass);
         nextBtn=findViewById(R.id.nextBtn);
@@ -95,12 +96,6 @@ public class loginName extends AppCompatActivity {
                         }
                     }
                 });
-        //名前をstring型にして次のActivityで利用
-        /*String name=editName.getText().toString();
-        Intent intent =new Intent(getApplication(),selectDate.class);
-        intent.putExtra("editName",editName.getText().toString());
-        startActivity(intent);
-        */
 
     }
     public void regNowClick(View v){

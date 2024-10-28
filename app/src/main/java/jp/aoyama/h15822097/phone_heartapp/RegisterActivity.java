@@ -1,6 +1,6 @@
 package jp.aoyama.h15822097.phone_heartapp;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -19,6 +19,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -50,7 +52,6 @@ public class RegisterActivity extends AppCompatActivity {
         //進度見れるバー
         progressBar.setVisibility(View.VISIBLE);
 
-
         String email,password;
         email=String.valueOf(editMail.getText());
         password=String.valueOf(editPass.getText());
@@ -66,8 +67,6 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-
-
         //firebase　アカウント作成
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -82,8 +81,6 @@ public class RegisterActivity extends AppCompatActivity {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(getApplicationContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-
-
                         }
                     }
                 });
